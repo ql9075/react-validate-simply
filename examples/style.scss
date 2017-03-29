@@ -1,0 +1,54 @@
+*{
+	margin: 0;
+	padding: 0;
+}
+
+#container{
+  .validator{
+    section{
+      display: block;
+      margin: 20px;
+      input{
+      	display: inline-block;
+	    margin-left: 10px;
+	    vertical-align: middle;
+	    height: 30px;
+	    line-height: 30px;
+	    border: 1px solid #ddd;
+	    text-indent: 10px;
+      }
+
+	  label{
+		vertical-align: middle;
+		display: inline-block;
+		width: 20%;
+	  }
+    }
+    .valid-wrapper{
+    	display: inline-block;
+    }
+    .valid-msg{
+    	color: #f34f4f;
+    	font-size: 12px;
+    	display: inline-block;
+    	padding-left: 15px;
+    }
+  }
+  .submit{
+  	display: block;
+    width: 100px;
+    height: 30px;
+    line-height: 30px;
+    background: #d81414;
+    color: #fff;
+    text-align: center;
+    margin: 20px;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+  }
+  .disable{
+  	background: #cecaca;
+    color: #a7a7a7;
+  }
+}
