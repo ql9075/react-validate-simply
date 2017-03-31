@@ -24,7 +24,7 @@ class App extends Component {
   inputChange({...args}, validator, msg) {
     const e = args[0];
     const name = e.target.name;
-    const { mobile, amount, bank} = this.state;
+    const { mobile, amount, bank, letters} = this.state;
     if (name === 'amount') {
       if (!validator) {
         this.setState({
