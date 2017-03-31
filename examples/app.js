@@ -1,7 +1,7 @@
 import React, {Component, PropTypes} from 'react';
 import ReactDOM from 'react-dom';
 import classnames from 'classnames';
-import Validate, {ValidateRules} from '../src/index';
+import Validate from '../src/index';
 
 import './style.scss';
 
@@ -17,6 +17,7 @@ class App extends Component {
       mobile: false,
       bank: false,
       amount: false,
+      letters: false
     }
   }
 
@@ -35,7 +36,7 @@ class App extends Component {
         this.setState({
           error: '',
           amount: true,
-          disable: mobile && bank && amount ? false :true
+          disable: mobile && bank && amount && letters? false :true
         })
       }
     } else if (name === 'bank') {
@@ -47,7 +48,19 @@ class App extends Component {
       } else {
         this.setState({
           bank: true,
-          disable: mobile && bank && amount ? false :true
+          disable: mobile && bank && amount && letters? false :true
+        })
+      }
+    } else if (name === 'letters') {
+      if (!validator) {
+        this.setState({
+          letters: false,
+          disable: true
+        })
+      } else {
+        this.setState({
+          letters: true,
+          disable: mobile && bank && amount && letters? false :true
         })
       }
     } else if (name === 'mobile') {
@@ -59,7 +72,7 @@ class App extends Component {
       } else {
         this.setState({
           mobile: true,
-          disable: mobile && bank && amount ? false :true
+          disable: mobile && bank && amount && letters? false :true
         })
       }
     }
@@ -78,7 +91,16 @@ class App extends Component {
     const {error} = this.state;
     return (
       <div className="validator-container">
-       <Validate>
+       <Validate validators={{
+        letters: (val) => {
+          return {
+            result: () => {
+              return (/^[A-Za-z]+$/).test(val)
+            },
+            msg: '输入字母吧'
+          };
+        }
+       }}>
          <section>
            <label>
             输入手机号：
@@ -109,6 +131,23 @@ class App extends Component {
                 isDefaultMsg:true,
                 validator:[{
                   name:'checkBankCard'
+                }]
+              }}
+            />
+        </section>
+        <section>
+           <label >
+            输入英文字母：
+            </label>
+            <input 
+              type="text"
+              name="letters"
+              onChange={this.inputChange}
+              onBlur={this.inputChange}
+              data-rules={{
+                isDefaultMsg:true,
+                validator:[{
+                  name:'letters'
                 }]
               }}
             />

@@ -100,16 +100,8 @@ class Validate extends Component {
     this.onValidateChange = this.onValidateChange.bind(this);
   }
 
-  // shouldComponentUpdate(nextProps, nextState) {
-  //   console.log('--------')
-  //   console.log(nextProps)
-  //   console.log(nextState)
-  //   return true;
-  // }
-
-  componentDidUpdate() {
-    const { tirgger } = this.props; 
-    //this.mapChildren(tirgger || '')
+  componentDidMount() {
+    this.validators = Object.assign({}, this.props.PropsValidators, this.props.validators);
   }
 
   _isType(obj, type) {
@@ -175,11 +167,11 @@ class Validate extends Component {
   _checkValidation({e, value, rules, msgId}, callback) {
   
     const _validator = rules.validator;
-
-    if (!_validator) {
+    const ValidationRules = this.validators;
+    if (!_validator || !ValidationRules) {
       return;
     }
-
+    
     const checkfn = () => {
       let j = 0;
       
@@ -189,7 +181,6 @@ class Validate extends Component {
         let valid = false, msg = '没有匹配的规则';
         const _rules = e._targetInst._currentElement.props['data-rules'];
         const msgData = this.state.msgData;
-        
 
         //自定义校验规则
         if (_data.reg) {
@@ -215,13 +206,10 @@ class Validate extends Component {
           callback && callback(false, '');
           return null;
         }
-
+        
         //默认校验
         if (value && valid) {
           if (j === _validator.length - 1) {
-            //console.log('校验成功')
-            //_rules.message = '';
-            //e.target.setAttribute('data-rules', _rules)
             
             msgData[msgId] = {
               id: msgId,
@@ -233,11 +221,7 @@ class Validate extends Component {
             callback && callback(true, '');
           }
         } else {
-         // console.log('校验失败')
-         console.log('校验失败-------')
-
-          // _rules.message = msg;
-          // e.target.setAttribute('data-rules', _rules)
+         
           if (!msgId) {
             return
           }
@@ -346,6 +330,7 @@ class Validate extends Component {
   }
 }
 
+
 Validate.defaultProps = {
   defaultValue: '',
   propForShowError: '',
@@ -356,10 +341,7 @@ Validate.defaultProps = {
   propForOnBlur: 'onBlur',
   errorText: '',
   className: 'validate',
+  PropsValidators: ValidationRules
 };
 
 export default Validate;
-
-export function ValidateRules() {
-  return ValidationRules;
-};
