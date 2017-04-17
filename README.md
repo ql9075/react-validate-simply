@@ -1,3 +1,6 @@
+
+[![npm version](https://badge.fury.io/js/react-validate-simply.svg)](https://badge.fury.io/js/react-validate-simply)
+
 ## 前言
 
 基于react校验input等控件, 一般用于直接校验不提交表单需求。
